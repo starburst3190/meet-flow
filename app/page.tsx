@@ -389,6 +389,39 @@ export default function MeetFlow() {
                 />
               </CardContent>
             </Card>
+            {commonSlots.length > 0 && (
+              <div className="mt-8 border-t pt-6">
+                <div className="mb-4">
+                  <h3 className="text-base font-semibold flex items-center gap-2 text-emerald-700 dark:text-emerald-400">
+                    系統推薦最佳替代時段 (Top 3)
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-0.5">
+                    根據所有成員的行事曆交集，為您挑選出最適合的 3 個時段。
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {commonSlots.slice(0, 3).map((s, index) => {
+                    const [d, h] = s.split("-").map(Number);
+                    return (
+                      <Card key={`rec-${s}`} className="bg-emerald-50/50 border-emerald-200 dark:bg-emerald-950/20 dark:border-emerald-800">
+                        <CardContent className="p-4 flex flex-col items-center justify-center text-center">
+                          <Badge variant="outline" className="mb-2 bg-white text-emerald-700 border-emerald-300 dark:bg-black dark:text-emerald-400">
+                            推薦選項 {index + 1}
+                          </Badge>
+                          <p className="font-medium text-lg text-emerald-900 dark:text-emerald-100 mt-1">
+                            {DAYS[d]} {h}:00–{h + 1}:00
+                          </p>
+                          <Button size="sm" className="mt-4 w-full bg-emerald-600 hover:bg-emerald-700 text-white">
+                            一鍵發送改期投票
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
           </TabsContent>
 
           {/* ── Tab 3: View Member ── */}
